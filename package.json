@@ -1,0 +1,27 @@
+{
+  "name": "meet_up",
+  "version": "1.0.0",
+  "description": "tool for finding a mutually convenient date and time for meetings",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ejherzog/meet_up.git"
+  },
+  "keywords": [
+    "date",
+    "time",
+    "picker",
+    "availability",
+    "meeting",
+    "finder"
+  ],
+  "author": "ejherzog",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ejherzog/meet_up/issues"
+  },
+  "homepage": "https://github.com/ejherzog/meet_up#readme"
+}
