@@ -4,11 +4,26 @@
   "description": "tool for finding a mutually convenient date and time for meetings",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server/server.js",
+    "webpack": "webpack --watch",
+    "build": "NODE_ENV=production webpack --config ./webpack.config.js --progress --colors"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ejherzog/meet_up.git"
+  },
+  "dependencies": {
+    "babel-core": "^6.26.0",
+    "babel-jest": "^22.4.3",
+    "babel-loader": "^7.1.2",
+    "express": "^4.16.3",
+    "mongoose": "^5.0.14",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.2.2",
+    "redux": "^3.7.2",
+    "webpack": "^3.10.0"
   },
   "keywords": [
     "date",
