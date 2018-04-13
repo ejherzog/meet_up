@@ -37,14 +37,24 @@ meetingSchema.statics.getMeetingInfo = function (meetingId) {
 
 };
 
-meetingSchema.methods.addUserToMeeting = function (user) {
+meetingSchema.methods.addUserToMeeting = function (meetingId, userId) {
 
-  let availability = meeting.timeslots.map(timeslot => {
-    {timeSlot: timeslot, available: false}
-  });
-  user.availability = availability;
-  meeting.users.push(user);
-  return meeting.save();
+  User.getUser(userId)
+    .then((user) => {
+      let availability = meeting.timeslots.map(timeslot => {
+        {timeSlot: timeslot, available: false}
+      });
+      user.availability = availability;
+      meeting.users.push(user);
+      return meeting.save();
+    })
+    .then((meeting) => {
+      if (meeting) {
+        return meeting;
+      } else {
+        throw new Error('An error occurred adding the user');
+      }
+    });
 
 }
 

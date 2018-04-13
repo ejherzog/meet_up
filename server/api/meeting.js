@@ -32,4 +32,19 @@ module.exports = function (app) {
       });
 
   });
+
+  router.post('/meeting/:id/user/:userid', function (req, res) {
+
+    let meetingId = req.params.id;
+    let userId = req.params.userid;
+
+    return Meeting.addUserToMeeting(meetingId, userId)
+      .then((meeting) => {
+        res.json({ res: 'success', data: meeting});
+      })
+      .catch((err) => {
+        res.json({ res: 'failure', data: err})
+      });
+
+  });
 }

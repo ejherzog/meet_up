@@ -52,4 +52,17 @@ userSchema.methods.updateUser = function (name, availability) {
   this.availability = availability;
   return this.save();
 
+};
+
+userSchema.statics.getUser = function (userId) {
+
+  return this.findOne({ _id: userId })
+    .then((user) => {
+      if (!user) {
+        throw new Error('No user with that email');
+      } else {
+        return bcrypt.compare(password, user.password);
+      }
+    });
+
 }

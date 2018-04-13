@@ -18,7 +18,13 @@ module.exports = function (app) {
 
   router.post('/user/:id', function (req, res) {
 
-
+    User.updateUser(req.body.name, req.body.availability)
+      .then((user) => {
+        res.json({ res: 'success', data: user });
+      })
+      .catch((err) => {
+        res.json({ res: 'failure', data: err })
+      });
 
   })
 
