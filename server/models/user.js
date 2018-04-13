@@ -27,7 +27,7 @@ userSchema.statics.addUser = function (email, name, password) {
     return newUser.save();
   });
 
-}
+};
 
 userSchema.statics.check = function (email, password) {
   // determines if a given password for a username is valid  or not.
@@ -45,3 +45,11 @@ userSchema.statics.check = function (email, password) {
     });
   // ENDSTUB
 };
+
+userSchema.methods.updateUser = function (name, availability) {
+
+  this.name = name.length > 0 ? name : this.name;
+  this.availability = availability;
+  return this.save();
+
+}

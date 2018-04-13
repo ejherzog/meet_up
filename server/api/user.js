@@ -16,4 +16,10 @@ module.exports = function (app) {
       });
   });
 
+  router.post('/user/:id', function (req, res) {
+
+
+
+  })
+
 }
