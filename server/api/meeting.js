@@ -1,11 +1,8 @@
 const router = require('express').Router();
-const isAuthenticated = require('../middlewares/isAuthenticated');
 const Meeting = require('../models/meeting');
 const User = require('../models/user');
 
 module.exports = function (app) {
-
-  router.use(isAuthenticated(app));
 
   router.post('/meeting', function (req, res) {
 
@@ -24,35 +21,6 @@ module.exports = function (app) {
     let meetingId = req.params.id;
 
     Meeting.getMeetingInfo(meetingId)
-      .then((meeting) => {
-        res.json({ res: 'success', data: meeting});
-      })
-      .catch((err) => {
-        res.json({ res: 'failure', data: err})
-      });
-
-  });
-
-  router.post('/meeting/:id/user/:userid', function (req, res) {
-
-    let meetingId = req.params.id;
-    let userId = req.params.userid;
-
-    return Meeting.addUserToMeeting(meetingId, userId)
-      .then((meeting) => {
-        res.json({ res: 'success', data: meeting});
-      })
-      .catch((err) => {
-        res.json({ res: 'failure', data: err})
-      });
-
-  });
-
-  router.delete('/meeting/:id', function (req, res) {
-
-    let meetingId = req.params.id;
-
-    Meeting.deleteMeeting(meetingId)
       .then((meeting) => {
         res.json({ res: 'success', data: meeting});
       })

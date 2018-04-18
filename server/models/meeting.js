@@ -38,18 +38,22 @@ meetingSchema.statics.getMeetingInfo = function (meetingId) {
 
 };
 
-meetingSchema.methods.addUserToMeeting = function (meetingId, userId) {
+meetingSchema.statics.addUserToMeeting = function (meetingId, userId) {
 
-  User.getUser(userId)
+  return this.model('User').findOne({ _id: userId })
     .then((user) => {
-      meeting.users.push(user);
-      return meeting.save();
-    })
-    .then((meeting) => {
-      if (meeting) {
-        return meeting;
+      if (user) {
+        this.findOne({ _id: meetingId })
+          .then((meeting) => {
+            if (meeting) {
+              meeting.users.push(user);
+              return meeting.save();
+            } else {
+              throw new Error('No meeting found');
+            }
+          })
       } else {
-        throw new Error('An error occurred adding the user');
+        throw new Error('No user found');
       }
     });
 
@@ -58,6 +62,12 @@ meetingSchema.methods.addUserToMeeting = function (meetingId, userId) {
 meetingSchema.statics.deleteMeeting = function (meetingId) {
 
   return this.findOneAndRemove({ _id: meetingId });
+
+}
+
+meetingSchema.statics.removeUser = function (user) {
+
+  return this.remove({ users: user });
 
 }
 

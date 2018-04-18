@@ -1,13 +1,14 @@
 const router = require('express').Router();
 const isAuthenticated = require('../middlewares/isAuthenticated');
+const Meeting = require('../models/meeting');
 const User = require('../models/user');
 
 module.exports = function (app) {
 
-  router.use(isAuthenticated(app));
+ // router.use(isAuthenticated(app));
 
   router.post('/user', function (req, res) {
-    User.addUser(req.body.email, req.body.user, req.body.password)
+    User.addUser(req.body.email, req.body.name, req.body.password)
       .then((user) => {
         res.json({ res: 'success', data: user });
       })
@@ -16,14 +17,17 @@ module.exports = function (app) {
       });
   });
 
-  router.post('/user/:id', function (req, res) {
+  router.post('/user/:userid/meeting/:meetingid', function (req, res) {
 
-    User.updateUser(req.body.name, req.body.availability)
-      .then((user) => {
-        res.json({ res: 'success', data: user });
+    let meetingId = req.params.meetingid;
+    let userId = req.params.userid;
+
+    return Meeting.addUserToMeeting(meetingId, userId)
+      .then((meeting) => {
+        res.json({ res: 'success', data: meeting});
       })
       .catch((err) => {
-        res.json({ res: 'failure', data: err })
+        res.json({ res: 'failure', data: err})
       });
 
   });
@@ -32,6 +36,7 @@ module.exports = function (app) {
 
     User.deleteUser(req.params.id)
       .then((user) => {
+        // TODO add removal from array in Meeting objects
         res.json({ res: 'success', data: user });
       })
       .catch((err) => {

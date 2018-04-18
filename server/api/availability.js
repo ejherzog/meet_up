@@ -5,7 +5,7 @@ const User = require('../models/user');
 
 module.exports = function (app) {
 
-  router.use(isAuthenticated(app));
+  //router.use(isAuthenticated(app));
 
   router.post('/availability', function (req, res) {
 
