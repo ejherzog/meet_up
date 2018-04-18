@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const isAuthenticated = require('../middlewares/isAuthenticated');
-const Meeting = require('../models/tweet');
-const User = requre('../models/user');
+const Meeting = require('../models/meeting');
+const User = require('../models/user');
 
 module.exports = function (app) {
 
@@ -47,4 +47,20 @@ module.exports = function (app) {
       });
 
   });
+
+  router.delete('/meeting/:id', function (req, res) {
+
+    let meetingId = req.params.id;
+
+    Meeting.deleteMeeting(meetingId)
+      .then((meeting) => {
+        res.json({ res: 'success', data: meeting});
+      })
+      .catch((err) => {
+        res.json({ res: 'failure', data: err})
+      });
+
+  });
+
+  return router;
 }

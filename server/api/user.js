@@ -4,7 +4,7 @@ const User = require('../models/user');
 
 module.exports = function (app) {
 
-  router.user(isAuthenticated(app));
+  router.use(isAuthenticated(app));
 
   router.post('/user', function (req, res) {
     User.addUser(req.body.email, req.body.user, req.body.password)
@@ -26,6 +26,20 @@ module.exports = function (app) {
         res.json({ res: 'failure', data: err })
       });
 
-  })
+  });
+
+  router.delete('/user/:id', function (req, res) {
+
+    User.deleteUser(req.params.id)
+      .then((user) => {
+        res.json({ res: 'success', data: user });
+      })
+      .catch((err) => {
+        res.json({ res: 'failure', data: err });
+      });
+
+  });
+
+  return router;
 
 }

@@ -6,11 +6,7 @@ let userSchema = new Schema({
 
   email: { type: String, required: true },
   name: { type: String, required: true },
-  password: { type: String, required: true },
-  availability: [{
-    timeSlot: Date,
-    available: Boolean
-  }]
+  password: { type: String, required: true }
 
 });
 
@@ -20,7 +16,6 @@ userSchema.statics.addUser = function (email, name, password) {
     email: email,
     name: name,
     password: password
-    availability: [];
   });
   return bcrypt.hash(newUser.password, 1).then((hash) => {
     newUser.password = hash;
@@ -46,10 +41,10 @@ userSchema.statics.check = function (email, password) {
   // ENDSTUB
 };
 
-userSchema.methods.updateUser = function (name, availability) {
+userSchema.methods.updateUser = function (name, password) {
 
   this.name = name.length > 0 ? name : this.name;
-  this.availability = availability;
+  this.password = password.length > 0 ? password : this.password;
   return this.save();
 
 };
@@ -66,3 +61,11 @@ userSchema.statics.getUser = function (userId) {
     });
 
 }
+
+userSchema.statics.deleteUser = function (userId) {
+
+ return this.findOneAndRemove({ _id: userId });
+
+}
+
+module.exports = mongoose.model('User', userSchema);

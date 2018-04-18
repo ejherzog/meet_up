@@ -17,7 +17,8 @@ meetingSchema.statics.createMeeting = function (title, timeslots) {
 
   let newMeeting = new this({
     title: title,
-    timeslots: timeslots
+    timeslots: timeslots,
+    users: []
   });
 
   return newMeeting.save();
@@ -41,10 +42,6 @@ meetingSchema.methods.addUserToMeeting = function (meetingId, userId) {
 
   User.getUser(userId)
     .then((user) => {
-      let availability = meeting.timeslots.map(timeslot => {
-        {timeSlot: timeslot, available: false}
-      });
-      user.availability = availability;
       meeting.users.push(user);
       return meeting.save();
     })
@@ -55,6 +52,12 @@ meetingSchema.methods.addUserToMeeting = function (meetingId, userId) {
         throw new Error('An error occurred adding the user');
       }
     });
+
+}
+
+meetingSchema.statics.deleteMeeting = function (meetingId) {
+
+  return this.findOneAndRemove({ _id: meetingId });
 
 }
 
