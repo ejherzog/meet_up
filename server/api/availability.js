@@ -49,18 +49,12 @@ module.exports = function (app) {
       let meetingId = req.body.meetingId;
       let userId = req.body.userId;
       let timeslot = req.body.timeslot;
-      Meeting.getMeetingInfo(meetingId)
-        .then((meeting) => {
-          User.getUser(userId)
-          .then((user) => {
-            Availability.deleteAvailability(meeting, user, timeslot)
-              .then((avail) => {
-                res.json({ res: 'success', data: avail});
-              })
-              .catch((err) => {
-                res.json({ res: 'failure', data: err})
-              })
-          });
+      Availability.deleteAvailability(meetingId, userId, timeslot)
+        .then((avail) => {
+          res.json({ res: 'success', data: avail});
+        })
+        .catch((err) => {
+          res.json({ res: 'failure', data: err})
         });
     }
 

@@ -9,10 +9,9 @@ let availSchema = new Schema({
 
 });
 
-availSchema.statics.createAvailability = function (userId, meetingId, timeslot) {
+availSchema.statics.createAvailability = function (meetingId, userId, timeslot) {
 
-  if (userId && meetingId && timeslot) {
-
+  if (meetingId && userId && timeslot) {
     let newAvail = new this({
       user: userId,
       meeting: meetingId,
