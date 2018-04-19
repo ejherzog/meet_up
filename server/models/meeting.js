@@ -4,11 +4,7 @@ const Schema = mongoose.Schema;
 let meetingSchema = new Schema({
 
   title: { type: String, required: true },
-  timeslots: [{type: Date}],
-  users: [{
-    type: Schema.ObjectId,
-    ref: 'User'
-  }],
+  timeslots: [{type: Date}]
 }, {
   timestamps: { createdAt: 'created_at' },
 });
@@ -46,8 +42,12 @@ meetingSchema.statics.addUserToMeeting = function (meetingId, userId) {
         this.findOne({ _id: meetingId })
           .then((meeting) => {
             if (meeting) {
-              meeting.users.push(user);
-              return meeting.save();
+              if (meeting.users.indexOf(user) == -1) {
+                throw new Error('User already part of meeting');
+              } else {
+                meeting.users.push(user);
+                return meeting.save();
+              }
             } else {
               throw new Error('No meeting found');
             }
@@ -62,12 +62,6 @@ meetingSchema.statics.addUserToMeeting = function (meetingId, userId) {
 meetingSchema.statics.deleteMeeting = function (meetingId) {
 
   return this.findOneAndRemove({ _id: meetingId });
-
-}
-
-meetingSchema.statics.removeUser = function (user) {
-
-  return this.remove({ users: user });
 
 }
 

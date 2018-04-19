@@ -11,40 +11,28 @@ let availSchema = new Schema({
 
 availSchema.statics.createAvailability = function (userId, meetingId, timeslot) {
 
-  return this.model('User').findOne({ _id: userId })
-    .then((user) => {
-      if (user) {
-        return this.model('Meeting').findOne({ _id: meetingId })
-          .then((meeting) => {
-            let newAvail = new this({
-              user: user,
-              meeting: meeting,
-              timeslot: timeslot
-            });
-            return newAvail.save();
-          })
-      } else {
-        throw new Error('No user with given id');
-      }
+  if (userId && meetingId && timeslot) {
+
+    let newAvail = new this({
+      user: userId,
+      meeting: meetingId,
+      timeslot: timeslot
     });
+    return newAvail.save();
+  } else {
+    throw new Error('Missing parameters');
+  }
 
 }
 
 availSchema.statics.getAllUserAvailForMeeting = function (meetingId) {
 
-  return this.model('Meeting').findOne({ _id: meetingId })
-    .then((meeting) => {
-      if (meeting) {
-        return this.find({meeting: meeting})
-          .then((allUserAvail) => {
-            if (allUserAvail) {
-              return allUserAvail;
-            } else {
-              throw new Error('No availability for that meeting');
-            }
-          })
+  return this.find({ meeting: meetingId })
+    .then((allUserAvail) => {
+      if (allUserAvail) {
+        return allUserAvail;
       } else {
-        throw new Error('No meeting found with given id');
+        throw new Error('No availability for that meeting');
       }
     });
 

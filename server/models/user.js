@@ -64,7 +64,10 @@ userSchema.statics.getUser = function (userId) {
 
 userSchema.statics.deleteUser = function (userId) {
 
- return this.findOneAndRemove({ _id: userId });
+  return this.model('Availability').find({ user: userId }).remove()
+    .then((avails) => {
+      return this.findOneAndRemove({ _id: userId });
+    });
 
 }
 
