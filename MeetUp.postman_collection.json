@@ -1,0 +1,745 @@
+{
+	"info": {
+		"_postman_id": "44c10ace-481e-46a8-bc02-aba2f6f3cc23",
+		"name": "MeetUp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Account",
+			"description": null,
+			"item": [
+				{
+					"name": "Account Signup - Valid",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "eowynecho88@gmail.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Eowyn",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123123",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/account/signup",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"account",
+								"signup"
+							]
+						},
+						"description": "Create a new account. If you run this more than once, you must change the email address because email must be unique in the database."
+					},
+					"response": []
+				},
+				{
+					"name": "Account Signup - Invalid",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "evajherzog@gmail.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Imposter Herzog",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "impostor",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/account/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"account",
+								"signup"
+							]
+						},
+						"description": "Using the same email address causes an error. Email must be unique."
+					},
+					"response": []
+				},
+				{
+					"name": "Account Login - Valid",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "evajherzog@gmail.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123123",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/account/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"account",
+								"login"
+							]
+						},
+						"description": "Logging in with valid credentials."
+					},
+					"response": []
+				},
+				{
+					"name": "Account Login - Invalid",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "fake@fake.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123123",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/account/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"account",
+								"login"
+							]
+						},
+						"description": "Can't log in with unknown email address."
+					},
+					"response": []
+				},
+				{
+					"name": "Account Login - Invalid",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "evajherzog@gmail.com",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "wrongPassword",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/account/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"account",
+								"login"
+							]
+						},
+						"description": "Can't log in with wrong password."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Meeting",
+			"description": null,
+			"item": [
+				{
+					"name": "Create Meeting",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							},
+							{
+								"key": "auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhZTFlYThkNWNiMzgzMDc4NDNkNmY0OSIsImlhdCI6MTUyNDc1NTcyN30.jjkcLD5JRTr2isnWZQsZvhKGwZd3-_YzQdUJgfomBug"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "React Rebels",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "timeslots[0]",
+									"value": "30 Apr 2018 13:00:00 EST",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "timeslots[1]",
+									"value": "30 Apr 2018 14:00:00 EST",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "timeslots[2]",
+									"value": "30 Apr 2018 15:00:00 EST",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "timeslots[3]",
+									"value": "30 Apr 2018 16:00:00 EST",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "timeslots[4]",
+									"value": "30 Apr 2018 17:00:00 EST",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "timeslots[5]",
+									"value": "01 May 2018 13:00:00 EST",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "timeslots[6]",
+									"value": "01 May 2018 14:00:00 EST",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "timeslots[7]",
+									"value": "01 May 2018 15:00:00 EST",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "timeslots[8]",
+									"value": "01 May 2018 16:00:00 EST",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "timeslots[9]",
+									"value": "01 May 2018 17:00:00 EST",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/meeting",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"meeting"
+							]
+						},
+						"description": "Create a meeting with 5 possible timeslots on 2 different days (10 timeslots total)."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Meeting Info - isMember",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhZTFlYThkNWNiMzgzMDc4NDNkNmY0OSIsImlhdCI6MTUyNDc1NTcyN30.jjkcLD5JRTr2isnWZQsZvhKGwZd3-_YzQdUJgfomBug"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:3000/api/meeting/5ae1fa3e6106ce09e1c9b4b0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"meeting",
+								"5ae1fa3e6106ce09e1c9b4b0"
+							]
+						},
+						"description": "Get meeting title, timeslots, members, and availability by id."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Meeting Info - isMember 2",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhZTFmYzcxNGQwMGVhMGEwMDY2YWZjOSIsImlhdCI6MTUyNDc1OTY2NX0.4tvtJbzqkhtwzvoZgZxHF0hg6scMZbqRyQL3G2fZ60k"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:3000/api/meeting/5ae200b5cbd6fb0a257dd0f4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"meeting",
+								"5ae200b5cbd6fb0a257dd0f4"
+							]
+						},
+						"description": "Get meeting title, timeslots, members, and availability by id."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Meeting Info - notMember",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhZTFmNzliYmJjYTBmMDlkODI2MjYzYiIsImlhdCI6MTUyNDc1ODQyN30.D2VSGDBat_AhDH6kFQsWXbjWZwhLrzLOQWcbbUv5MiM"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:3000/api/meeting/5ae1fa3e6106ce09e1c9b4b0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"meeting",
+								"5ae1fa3e6106ce09e1c9b4b0"
+							]
+						},
+						"description": "Get meeting title, timeslots, and members by id. This user should NOT see availability for the meeting."
+					},
+					"response": []
+				},
+				{
+					"name": "Join Meeting - Invalid",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhZTFmYzcxNGQwMGVhMGEwMDY2YWZjOSIsImlhdCI6MTUyNDc1OTY2NX0.4tvtJbzqkhtwzvoZgZxHF0hg6scMZbqRyQL3G2fZ60k"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:3000/api/meeting/membership/5ae1fa3e6106ce09e1c9b4b0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"meeting",
+								"membership",
+								"5ae1fa3e6106ce09e1c9b4b0"
+							]
+						},
+						"description": "Trying to join a meeting the user is already a member of."
+					},
+					"response": []
+				},
+				{
+					"name": "Join Meeting - Valid",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhZTFmZjZmY2JkNmZiMGEyNTdkZDBmMSIsImlhdCI6MTUyNDc2MDQzMX0.Weccn8mwITIlOFKrxx6sxQ1-X3bBNXiHVk9LkdSwYYo"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:3000/api/meeting/membership/5ae1fa3e6106ce09e1c9b4b0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"meeting",
+								"membership",
+								"5ae1fa3e6106ce09e1c9b4b0"
+							]
+						},
+						"description": "Join a meeting."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Availability",
+			"description": "",
+			"item": [
+				{
+					"name": "Add Availability - Valid",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhZTFmZjZmY2JkNmZiMGEyNTdkZDBmMSIsImlhdCI6MTUyNDc2MDQzMX0.Weccn8mwITIlOFKrxx6sxQ1-X3bBNXiHVk9LkdSwYYo"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "meetingId",
+									"value": "5ae200b5cbd6fb0a257dd0f4",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "timeslot",
+									"value": "29 May 2018 18:00:00 EST",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/availability",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"availability"
+							]
+						},
+						"description": "Add availability for timeslot in existing meeting that current user is a member of."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Availability - Valid",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhZTFmZjZmY2JkNmZiMGEyNTdkZDBmMSIsImlhdCI6MTUyNDc2MDQzMX0.Weccn8mwITIlOFKrxx6sxQ1-X3bBNXiHVk9LkdSwYYo"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "meetingId",
+									"value": "5ae200b5cbd6fb0a257dd0f4",
+									"description": "",
+									"type": "text"
+								},
+								{
+									"key": "timeslot",
+									"value": "29 May 2018 18:30:00 EST",
+									"description": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/availability",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"availability"
+							]
+						},
+						"description": "Delete existing availability record."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"description": null,
+			"item": [
+				{
+					"name": "Get Meetings",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhZTFmZjZmY2JkNmZiMGEyNTdkZDBmMSIsImlhdCI6MTUyNDc2MDQzMX0.Weccn8mwITIlOFKrxx6sxQ1-X3bBNXiHVk9LkdSwYYo"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:3000/api/user/membership",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"membership"
+							]
+						},
+						"description": "Get all the meetings the current user is a member of."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Membership Status (1)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhZTFmZjZmY2JkNmZiMGEyNTdkZDBmMSIsImlhdCI6MTUyNDc2MDQzMX0.Weccn8mwITIlOFKrxx6sxQ1-X3bBNXiHVk9LkdSwYYo"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:3000/api/user/5ae1f79bbbca0f09d826263b/membership/5ae200b5cbd6fb0a257dd0f4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"5ae1f79bbbca0f09d826263b",
+								"membership",
+								"5ae200b5cbd6fb0a257dd0f4"
+							]
+						},
+						"description": "Get isMember and isOwner information for a user and meeting. In this case, both should be true."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Membership Status (2)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhZTFmZjZmY2JkNmZiMGEyNTdkZDBmMSIsImlhdCI6MTUyNDc2MDQzMX0.Weccn8mwITIlOFKrxx6sxQ1-X3bBNXiHVk9LkdSwYYo"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:3000/api/user/5ae1f79bbbca0f09d826263b/membership/5ae200b5cbd6fb0a257dd0f4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"5ae1f79bbbca0f09d826263b",
+								"membership",
+								"5ae200b5cbd6fb0a257dd0f4"
+							]
+						},
+						"description": "Get isMember and isOwner information for a user and meeting. In this case, user is a member, but not the owner."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Membership Status (3)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhZTFmZjZmY2JkNmZiMGEyNTdkZDBmMSIsImlhdCI6MTUyNDc2MDQzMX0.Weccn8mwITIlOFKrxx6sxQ1-X3bBNXiHVk9LkdSwYYo"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:3000/api/user/5ae1ea8d5cb38307843d6f49/membership/5ae200b5cbd6fb0a257dd0f4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"5ae1ea8d5cb38307843d6f49",
+								"membership",
+								"5ae200b5cbd6fb0a257dd0f4"
+							]
+						},
+						"description": "Get isMember and isOwner information for a user and meeting. In this case, user is not a member and thus also not the owner."
+					},
+					"response": []
+				},
+				{
+					"name": "Leave Meeting",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhZTFmYzcxNGQwMGVhMGEwMDY2YWZjOSIsImlhdCI6MTUyNDc1OTY2NX0.4tvtJbzqkhtwzvoZgZxHF0hg6scMZbqRyQL3G2fZ60k"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:3000/api/user/membership/5ae2074161e29c0a644bd792",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"membership",
+								"5ae2074161e29c0a644bd792"
+							]
+						},
+						"description": "The current user's membership and availability for the specified meeting should be deleted."
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
