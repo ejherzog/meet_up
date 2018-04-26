@@ -37,19 +37,7 @@ meetingSchema.statics.getMeetingInfo = function (meetingId) {
 
 meetingSchema.statics.deleteMeeting = function (meetingId) {
 
-  return this.findOneAndRemove({ _id: meetingId })
-    .then((meeting) => {
-      console.log(meeting);
-      this.model('Membership').findAndRemove({ meetingId: meetingId })
-        .then((memberships) => {
-          console.log(memberships);
-          this.model('Availability').findAndRemove({ meetingId: meetingId })
-            .then((availability) => {
-              console.log(availability);
-              return meeting;
-            })
-        })
-    })
+  return this.findOneAndRemove({ _id: meetingId });
 
 }
 

@@ -92,8 +92,9 @@ membershipSchema.statics.userIsMember = function (meetingId, userId) {
 
 membershipSchema.statics.userIsOwner = function (meetingId, userId) {
 
-  return this.find({ meeting: meetingId, user: userId })
+  return this.findOne({ meeting: meetingId, user: userId })
     .then((membership) => {
+      console.log(membership);
       if (membership && membership.isOwner) {
         return true;
       } else {

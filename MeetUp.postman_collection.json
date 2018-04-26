@@ -485,6 +485,68 @@
 						"description": "Join a meeting."
 					},
 					"response": []
+				},
+				{
+					"name": "Delete Meeting",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhZTFlYThkNWNiMzgzMDc4NDNkNmY0OSIsImlhdCI6MTUyNDc1NTcyN30.jjkcLD5JRTr2isnWZQsZvhKGwZd3-_YzQdUJgfomBug"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:3000/api/meeting/5ae20c649bbb6e0ba2d58914",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"meeting",
+								"5ae20c649bbb6e0ba2d58914"
+							]
+						},
+						"description": "Delete a meeting that the current user is the owner of."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Meeting - Not Owner",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhZTFmYzcxNGQwMGVhMGEwMDY2YWZjOSIsImlhdCI6MTUyNDc1OTY2NX0.4tvtJbzqkhtwzvoZgZxHF0hg6scMZbqRyQL3G2fZ60k"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:3000/api/meeting/5ae200b5cbd6fb0a257dd0f4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"meeting",
+								"5ae200b5cbd6fb0a257dd0f4"
+							]
+						},
+						"description": "Should not delete meeting that current user is not a member of."
+					},
+					"response": []
 				}
 			]
 		},
