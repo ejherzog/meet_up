@@ -24,6 +24,23 @@ membershipSchema.statics.createMembership = function (meetingId, userId, isOwner
 
 }
 
+membershipSchema.statics.getMembership = function (meetingId, userId) {
+
+  return this.findOne({ meeting: meetingId, user: userId })
+    .then((membership) => {
+      if (membership) {
+        if (membership.isOwner) {
+          return {isMember: true, isOwner: true};
+        } else {
+          return {isMember: true, isOwner: false}
+        }
+      } else {
+        return {isMember: false, isOwner: false}
+      }
+    });
+
+}
+
 membershipSchema.statics.getMeetingMembers = function (meetingId) {
 
   return this.find({ meeting: meetingId })

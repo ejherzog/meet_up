@@ -9,7 +9,7 @@ let meetingSchema = new Schema({
   timestamps: { createdAt: 'created_at' },
 });
 
-meetingSchema.statics.createMeeting = function (title, timeslots) {
+meetingSchema.statics.createMeeting = function (title, timeslots, currentUserId) {
 
   let newMeeting = new this({
     title: title,
@@ -17,7 +17,13 @@ meetingSchema.statics.createMeeting = function (title, timeslots) {
     users: []
   });
 
-  return newMeeting.save();
+  return newMeeting.save()
+    .then((meeting) => {
+      this.model('Membership').createMembership(meeting._id, currentUserId, true)
+        .then((membership) => {
+          return meeting;
+        });
+    });
 
 }
 
@@ -39,7 +45,16 @@ meetingSchema.statics.getMeetingInfo = function (meetingId) {
 
 meetingSchema.statics.deleteMeeting = function (meetingId) {
 
-  return this.findOneAndRemove({ _id: meetingId });
+  return this.findOneAndRemove({ _id: meetingId })
+    .then((meeting) => {
+      this.model('Membership').findAndRemove({ meetingId: meetingId })
+        .then((membership) => {
+          this.model('Availability').findAndRemove({ meetingId: meetingId })
+            .then((availability) => {
+              return meeting;
+            })
+        })
+    })
 
 }
 

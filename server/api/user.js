@@ -8,15 +8,38 @@ module.exports = function (app) {
 
   router.use(isAuthenticated(app));
 
-  router.delete('/user/:id', function (req, res) {
+  // get meetings user is a member of
+  router.get('/user/membership/', function (req, res) {
 
-    // delete membership or meetings
-    // delete availability
-    // then, delete user
+    Membership.getUserMeetings(req.user._id)
+      .then((meetings) => {
+        res.json({ res: 'success', data: meetings });
+      })
+      .catch((err) => {
+        res.json({ res: 'failure', data: err });
+      });
 
-    User.deleteUser(req.params.id)
-      .then((user) => {
-        res.json({ res: 'success', data: user });
+  });
+
+  // check membership status of user in a meeting
+  router.get('/user/:userId/membership/:meetingId', function (req, res) {
+
+    Membership.getMembership(meetingId, userId)
+      .then((membership) => {
+        res.json({ res: 'success', data: membership });
+      })
+      .catch((err) => {
+        res.json({ res: 'failure', data: err });
+      });
+
+  });
+
+  // remove user from meeting
+  router.delete('/user/membership/:meetingId', function (req, res) {
+
+    Membership.deleteMembership(req.params.meetingId, req.user._id)
+      .then((membership) => {
+        res.json({ res: 'success', data: membership });
       })
       .catch((err) => {
         res.json({ res: 'failure', data: err });

@@ -7,11 +7,12 @@ const Membership = require('../models/membership');
 
 module.exports = function (app) {
 
-  //router.use(isAuthenticated(app));
+  router.use(isAuthenticated(app));
 
+  // add new available timeslot for current user in specified meeting
   router.post('/availability', function (req, res) {
 
-    Availability.createAvailability(req.body.meetingId, req.body.userId, req.body.timeslot)
+    Availability.createAvailability(req.body.meetingId, req.user._id, req.body.timeslot)
       .then((avail) => {
         res.json({ res: 'success', data: avail});
       })
@@ -21,6 +22,7 @@ module.exports = function (app) {
 
   })
 
+  // get all availability records for existing meeting
   router.get('/availability/:meetingid', function (req, res) {
 
     let meetingId = req.params.meetingid;
@@ -35,6 +37,7 @@ module.exports = function (app) {
 
   });
 
+  // delete existing availability for current user in specified meeting (or specified by record id)
   router.delete('/availability/:id?', function (req, res) {
 
     if (req.params.id) {
