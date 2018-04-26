@@ -3,9 +3,9 @@ const Schema = mongoose.Schema;
 
 let availSchema = new Schema({
 
-  user: { type: Schema.ObjectId, ref: 'User' },
-  meeting: { type: Schema.ObjectId, ref: 'Meeting' },
-  timeslot: { type: Date }
+  user: { type: Schema.ObjectId, ref: 'User', required: true },
+  meeting: { type: Schema.ObjectId, ref: 'Meeting', required: true },
+  timeslot: { type: Date, required: true }
 
 });
 

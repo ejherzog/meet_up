@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Meeting = require('../models/meeting');
 const User = require('../models/user');
+const Membership = require('../models/membership');
 
 module.exports = function (app) {
 

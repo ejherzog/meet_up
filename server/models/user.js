@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 
 let userSchema = new Schema({
 
-  email: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
   name: { type: String, required: true },
   password: { type: String, required: true }
 
@@ -29,7 +29,6 @@ userSchema.statics.check = function (email, password) {
   // find a user with the username equivalent to the username passed in.
   // if  there is no  user then throw a new  Error('No User') else  return the result
   // of bcrypt.compare for the password and the user's password
-  // STUB
   return this.findOne({ email: email })
     .then((user) => {
       if (!user) {
@@ -38,37 +37,6 @@ userSchema.statics.check = function (email, password) {
         return bcrypt.compare(password, user.password);
       }
     });
-  // ENDSTUB
 };
-
-userSchema.methods.updateUser = function (name, password) {
-
-  this.name = name.length > 0 ? name : this.name;
-  this.password = password.length > 0 ? password : this.password;
-  return this.save();
-
-};
-
-userSchema.statics.getUser = function (userId) {
-
-  return this.findOne({ _id: userId })
-    .then((user) => {
-      if (!user) {
-        throw new Error('No user with that email');
-      } else {
-        return bcrypt.compare(password, user.password);
-      }
-    });
-
-}
-
-userSchema.statics.deleteUser = function (userId) {
-
-  return this.model('Availability').find({ user: userId }).remove()
-    .then((avails) => {
-      return this.findOneAndRemove({ _id: userId });
-    });
-
-}
 
 module.exports = mongoose.model('User', userSchema);

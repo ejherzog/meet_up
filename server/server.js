@@ -30,23 +30,22 @@ app.use(bodyParser.json());
 // static directory setup
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
-
-const meeting = require('./api/meeting');
-app.use('/api', meeting(app));
-// ENDSTUB
-
-
-const user = require('./api/user');
-app.use('/api', user(app));
-// ENDSTUB
-
-const avail = require('./api/availability');
-app.use('/api', avail(app));
-
 // if we dont hit any api routes, then serve index.html from public
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
 });
+
+const accountRoutes = require('./api/account');
+app.use('/account', accountRoutes(app));
+
+const meeting = require('./api/meeting');
+app.use('/api', meeting(app));
+
+const user = require('./api/user');
+app.use('/api', user(app));
+
+const avail = require('./api/availability');
+app.use('/api', avail(app));
 
 // set up app to listen on port 3000  or any env port specified
 app.listen(process.env.PORT || 3000, () => {

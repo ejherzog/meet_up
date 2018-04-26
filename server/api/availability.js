@@ -3,6 +3,7 @@ const isAuthenticated = require('../middlewares/isAuthenticated');
 const Meeting = require('../models/meeting');
 const User = require('../models/user');
 const Availability = require('../models/availability');
+const Membership = require('../models/membership');
 
 module.exports = function (app) {
 
@@ -10,7 +11,7 @@ module.exports = function (app) {
 
   router.post('/availability', function (req, res) {
 
-    Availability.createAvailability(req.body.meeting, req.body.user, req.body.timeslot)
+    Availability.createAvailability(req.body.meetingId, req.body.userId, req.body.timeslot)
       .then((avail) => {
         res.json({ res: 'success', data: avail});
       })

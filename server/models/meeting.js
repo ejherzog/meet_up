@@ -23,41 +23,19 @@ meetingSchema.statics.createMeeting = function (title, timeslots) {
 
 meetingSchema.statics.getMeetingInfo = function (meetingId) {
 
-  return this.findOne({ _id: meetingId})
+  return this.findOne({ _id: meetingId })
     .then((meeting) => {
       if (meeting) {
-        return meeting;
+        this.model('Availability').getAllUserAvailForMeeting(meetingId)
+          .then((allAvail) => {
+            return { meeting: meeting, availability: allAvail };
+          })
       } else {
         throw new Error('No meeting with that id');
       }
     });
 
 };
-
-meetingSchema.statics.addUserToMeeting = function (meetingId, userId) {
-
-  return this.model('User').findOne({ _id: userId })
-    .then((user) => {
-      if (user) {
-        this.findOne({ _id: meetingId })
-          .then((meeting) => {
-            if (meeting) {
-              if (meeting.users.indexOf(user) == -1) {
-                throw new Error('User already part of meeting');
-              } else {
-                meeting.users.push(user);
-                return meeting.save();
-              }
-            } else {
-              throw new Error('No meeting found');
-            }
-          })
-      } else {
-        throw new Error('No user found');
-      }
-    });
-
-}
 
 meetingSchema.statics.deleteMeeting = function (meetingId) {
 
