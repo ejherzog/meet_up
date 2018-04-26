@@ -3,6 +3,7 @@ const isAuthenticated = require('../middlewares/isAuthenticated');
 const Meeting = require('../models/meeting');
 const User = require('../models/user');
 const Membership = require('../models/membership');
+const Availability = require('../models/availability');
 
 module.exports = function (app) {
 
@@ -24,7 +25,7 @@ module.exports = function (app) {
   // check membership status of user in a meeting
   router.get('/user/:userId/membership/:meetingId', function (req, res) {
 
-    Membership.getMembership(meetingId, userId)
+    Membership.getMembership(req.params.meetingId, req.params.userId)
       .then((membership) => {
         res.json({ res: 'success', data: membership });
       })
@@ -37,9 +38,16 @@ module.exports = function (app) {
   // remove user from meeting
   router.delete('/user/membership/:meetingId', function (req, res) {
 
-    Membership.deleteMembership(req.params.meetingId, req.user._id)
-      .then((membership) => {
-        res.json({ res: 'success', data: membership });
+    Membership.userIsOwner(req.params.meetingId, req.user._id)
+      .then((owner) => {
+        if (owner) {
+          res.json({ res: 'failure', data: 'Meeting cannot leave the meeting. Try deleting instead.'});
+        } else {
+          Membership.deleteMembership(req.params.meetingId, req.user._id)
+            .then((membership) => {
+              res.json({ res: 'success', data: membership });
+            })
+        }
       })
       .catch((err) => {
         res.json({ res: 'failure', data: err });

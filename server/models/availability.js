@@ -39,13 +39,13 @@ availSchema.statics.getAllUserAvailForMeeting = function (meetingId) {
 
 availSchema.statics.deleteAvailability = function (meetingId, userId, timeslot) {
 
-  return this.findOneAndRemove({user_id: userId, meeting_id: meetingId, timeslot: timeslot});
+  return this.findOneAndRemove({user: userId, meeting: meetingId, timeslot: timeslot});
 
 }
 
-availSchema.statics.deleteAvailability = function (availId) {
+availSchema.statics.deleteAvailabilityForUser = function (meetingId, userId) {
 
-  return this.findOneAndRemove({ _id: availId });
+  return this.findAndRemove({user: userId, meeting: meetingId});
 
 }
 

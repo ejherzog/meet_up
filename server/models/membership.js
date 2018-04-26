@@ -11,16 +11,13 @@ let membershipSchema = new Schema({
 
 membershipSchema.statics.createMembership = function (meetingId, userId, isOwner = false) {
 
-  if (meetingId && userId && isOwner) {
-    let newMember = new this({
-      user: userId,
-      meeting: meetingId,
-      isOwner: isOwner
-    });
-    return newMember.save();
-  } else {
-    throw new Error('Missing parameters');
-  }
+  let newMember = new this({
+    user: userId,
+    meeting: meetingId,
+    isOwner: isOwner
+  });
+
+  return newMember.save();
 
 }
 
@@ -82,7 +79,7 @@ membershipSchema.statics.getUserMeetings = function (userId) {
 
 membershipSchema.statics.userIsMember = function (meetingId, userId) {
 
-  return this.find({ meeting: meetingId, user: userId })
+  return this.findOne({ meeting: meetingId, user: userId })
     .then((membership) => {
       if (membership) {
         return true;
@@ -118,3 +115,5 @@ membershipSchema.statics.deleteMembership = function (meetingId, userId) {
     });
 
 }
+
+module.exports = mongoose.model('Membership', membershipSchema);

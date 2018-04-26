@@ -37,30 +37,19 @@ module.exports = function (app) {
 
   });
 
-  // delete existing availability for current user in specified meeting (or specified by record id)
-  router.delete('/availability/:id?', function (req, res) {
+  // delete existing availability for current user in specified meeting
+  router.delete('/availability', function (req, res) {
 
-    if (req.params.id) {
-      let availId = req.params.id;
-      Availability.deleteAvailability(availId)
-        .then((avail) => {
-          res.json({ res: 'success', data: avail});
-        })
-        .catch((err) => {
-          res.json({ res: 'failure', data: err})
-        });
-    } else {
-      let meetingId = req.body.meetingId;
-      let userId = req.body.userId;
-      let timeslot = req.body.timeslot;
-      Availability.deleteAvailability(meetingId, userId, timeslot)
-        .then((avail) => {
-          res.json({ res: 'success', data: avail});
-        })
-        .catch((err) => {
-          res.json({ res: 'failure', data: err})
-        });
-    }
+    let meetingId = req.body.meetingId;
+    let userId = req.user._id;
+    let timeslot = req.body.timeslot;
+    Availability.deleteAvailability(meetingId, userId, timeslot)
+      .then((avail) => {
+        res.json({ res: 'success', data: avail});
+      })
+      .catch((err) => {
+        res.json({ res: 'failure', data: err})
+      });
 
   });
 
